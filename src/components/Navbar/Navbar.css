@@ -1,0 +1,53 @@
+.navbar {
+  margin: 0 0 6px;
+  font-size: 18px;
+  background-color: #333;   
+  color: white;             
+  display: flex;           
+  align-items: center;     
+  justify-content: space-between; /* logo a la izq, botón a la der */
+  padding: 10px 20px;       /* espacio interno */
+}
+.font-navbar{
+  background-color: #000000;   
+  color: white;                
+  padding: 10px 20px;          /* espacio interno */
+  border: none;               
+  border-radius: 5px;          /* esquinas redondeadas */
+  cursor: pointer;             
+  font-size: 16px;
+  transition: background 0.3s; /* animación */
+}
+
+.logo-img {
+  background: transparent;
+  height: 50px;   
+  width: auto;    
+}
+
+
+.logout-link {
+  background-color: #e74c3c;   
+  color: white;                
+  padding: 10px 20px;          
+  border: none;                
+  border-radius: 5px;          
+  cursor: pointer;           
+  font-size: 16px;
+  transition: background 0.3s; 
+}
+
+.logout-link:hover {
+  background-color: #c0392b;   
+}
+
+.login-link{
+  background-color: #80e73c;   
+  color: white;                
+  padding: 10px 20px;          
+  border: none;                
+  border-radius: 5px;          
+  cursor: pointer;             
+  font-size: 16px;
+  transition: background 0.3s; /* animación */
+}

@@ -1,0 +1,36 @@
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f9f9f9; 
+}
+
+.App{
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* El contenido crece y empuja el footer hacia abajo */
+.App-content {
+  flex: 1 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+
+  /* Fondo amarillo plano */
+  background-color: #fff7cd; /* puedes ajustar el tono */
+}
+
+
+
+@media (max-width: 768px){
+  .App-content { background-attachment: scroll; }
+}

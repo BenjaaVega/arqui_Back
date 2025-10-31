@@ -1,0 +1,310 @@
+/* WebPay Return Container */
+.webpay-return-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+/* WebPay Return Card */
+.webpay-return-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  padding: 3rem;
+  max-width: 600px;
+  width: 100%;
+  text-align: center;
+  animation: webpay-return-slide-in 0.5s ease-out;
+}
+
+@keyframes webpay-return-slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* WebPay Return Icon */
+.webpay-return-icon {
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.webpay-return-spinner {
+  width: 4rem;
+  height: 4rem;
+  border: 4px solid #e9ecef;
+  border-top: 4px solid #007bff;
+  border-radius: 50%;
+  animation: webpay-return-spin 1s linear infinite;
+}
+
+@keyframes webpay-return-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.webpay-return-success-icon,
+.webpay-return-error-icon {
+  font-size: 4rem;
+  display: block;
+}
+
+/* WebPay Return Headings */
+.webpay-return-card h2 {
+  margin: 0 0 1rem 0;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #333;
+}
+
+.webpay-return-card p {
+  margin: 0 0 2rem 0;
+  color: #6c757d;
+  font-size: 1.1rem;
+  line-height: 1.5;
+}
+
+/* WebPay Return Transaction Details */
+.webpay-return-transaction-details {
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 2rem 0;
+  text-align: left;
+}
+
+.webpay-return-transaction-details h3 {
+  margin: 0 0 1rem 0;
+  color: #333;
+  font-size: 1.2rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* WebPay Return Details */
+.webpay-return-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.webpay-return-detail {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.webpay-return-detail:last-child {
+  border-bottom: none;
+}
+
+.webpay-return-detail span:first-child {
+  font-weight: 600;
+  color: #333;
+}
+
+.webpay-return-amount {
+  font-weight: 700;
+  color: #28a745;
+  font-size: 1.1rem;
+}
+
+.webpay-return-token {
+  font-family: 'Courier New', monospace;
+  background: #e9ecef;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  word-break: break-all;
+}
+
+.webpay-return-code {
+  font-family: 'Courier New', monospace;
+  background: #d4edda;
+  color: #155724;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.webpay-return-status {
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.webpay-return-status-success {
+  background: #d4edda;
+  color: #155724;
+}
+
+/* WebPay Return Actions */
+.webpay-return-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin: 2rem 0;
+  flex-wrap: wrap;
+}
+
+.webpay-return-button {
+  padding: 0.75rem 2rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.webpay-return-button-primary {
+  background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+  color: white;
+  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+}
+
+.webpay-return-button-primary:hover {
+  background: linear-gradient(135deg, #0056b3 0%, #004085 100%);
+  box-shadow: 0 6px 16px rgba(0, 123, 255, 0.4);
+  transform: translateY(-2px);
+}
+
+.webpay-return-button-secondary {
+  background: white;
+  color: #6c757d;
+  border: 2px solid #e1e5e9;
+}
+
+.webpay-return-button-secondary:hover {
+  background: #f8f9fa;
+  border-color: #6c757d;
+  color: #333;
+}
+
+/* WebPay Return Countdown */
+.webpay-return-countdown {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: #e7f3ff;
+  border: 1px solid #b3d9ff;
+  border-radius: 8px;
+  color: #004085;
+  font-weight: 500;
+}
+
+/* WebPay Return Error Details */
+.webpay-return-error-details {
+  background: #f8d7da;
+  border: 1px solid #f5c6cb;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 2rem 0;
+  text-align: left;
+}
+
+.webpay-return-error-message {
+  margin-bottom: 1rem;
+}
+
+.webpay-return-error-message strong {
+  color: #721c24;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.webpay-return-error-message p {
+  margin: 0;
+  color: #721c24;
+  font-family: 'Courier New', monospace;
+  background: white;
+  padding: 0.75rem;
+  border-radius: 4px;
+  border: 1px solid #f5c6cb;
+}
+
+/* State-specific styles */
+.webpay-return-processing {
+  border-left: 4px solid #007bff;
+}
+
+.webpay-return-success {
+  border-left: 4px solid #28a745;
+}
+
+.webpay-return-error {
+  border-left: 4px solid #dc3545;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .webpay-return-container {
+    padding: 1rem;
+  }
+  
+  .webpay-return-card {
+    padding: 2rem;
+  }
+  
+  .webpay-return-card h2 {
+    font-size: 1.5rem;
+  }
+  
+  .webpay-return-actions {
+    flex-direction: column;
+  }
+  
+  .webpay-return-button {
+    width: 100%;
+  }
+  
+  .webpay-return-detail {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+  
+  .webpay-return-token {
+    word-break: break-all;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .webpay-return-card {
+    padding: 1.5rem;
+  }
+  
+  .webpay-return-card h2 {
+    font-size: 1.25rem;
+  }
+  
+  .webpay-return-card p {
+    font-size: 1rem;
+  }
+  
+  .webpay-return-transaction-details,
+  .webpay-return-error-details {
+    padding: 1rem;
+  }
+}

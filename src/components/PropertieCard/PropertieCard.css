@@ -1,0 +1,96 @@
+/* src/components/PropertieCard.css */
+.property-card {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  border: 1px solid rgba(0,0,0,.08);
+  border-radius: 14px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 6px 20px rgba(0,0,0,.06);
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+
+.property-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(0,0,0,.09);
+}
+
+.property-thumb {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  background: #f6f7fb;
+}
+.property-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  padding: 10px;
+}
+
+.property-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #111827;
+  color: #fff;
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 999px;
+}
+
+.property-body {
+  padding: 12px 14px 16px;
+}
+
+.property-title {
+  margin: 0 0 6px;
+  font-size: 18px;
+}
+
+.property-location {
+  font-size: 14px;
+  color: #374151;
+  margin-bottom: 8px;
+}
+
+.property-price {
+  font-weight: 600;
+  margin: 6px 0;
+}
+
+.property-desc {
+  font-size: 13px;
+  color: #4b5563;
+  margin: 8px 0 12px;
+}
+
+.property-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.property-btn {
+  appearance: none;
+  border: 1px solid rgba(0,0,0,.1);
+  background: #f8fafc;
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+}
+.property-btn:hover { background: #eef2f7; }
+
+.property-btn--primary {
+  background: #3b82f6;
+  border-color: #3b82f6;
+  color: #fff;
+}
+.property-btn--primary:hover { filter: brightness(0.95); }
+
+.property-btn--danger {
+  background: #ef4444;
+  border-color: #ef4444;
+  color: #fff;
+}
