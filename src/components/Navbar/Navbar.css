@@ -1,53 +1,141 @@
 .navbar {
   margin: 0 0 6px;
   font-size: 18px;
-  background-color: #333;   
-  color: white;             
-  display: flex;           
-  align-items: center;     
-  justify-content: space-between; /* logo a la izq, botón a la der */
-  padding: 10px 20px;       /* espacio interno */
+  background-color: #333;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 20px;
+  flex-wrap: wrap;
 }
+
+.navbar-left,
+.navbar-center,
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.navbar-left {
+  flex: 0 0 auto;
+}
+
+.navbar-center {
+  flex: 1 1 auto;
+  justify-content: center;
+}
+
+.navbar-right {
+  flex: 0 0 auto;
+  margin-left: auto;
+}
+
 .font-navbar{
-  background-color: #000000;   
-  color: white;                
-  padding: 10px 20px;          /* espacio interno */
-  border: none;               
-  border-radius: 5px;          /* esquinas redondeadas */
-  cursor: pointer;             
+  background-color: #000000;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
   font-size: 16px;
-  transition: background 0.3s; /* animación */
+  transition: background 0.3s;
+}
+
+.font-navbar:hover {
+  background-color: #111;
 }
 
 .logo-img {
   background: transparent;
-  height: 50px;   
-  width: auto;    
+  height: 50px;
+  width: auto;
 }
 
-
 .logout-link {
-  background-color: #e74c3c;   
-  color: white;                
-  padding: 10px 20px;          
-  border: none;                
-  border-radius: 5px;          
-  cursor: pointer;           
+  background-color: #e74c3c;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
   font-size: 16px;
-  transition: background 0.3s; 
+  transition: background 0.3s;
 }
 
 .logout-link:hover {
-  background-color: #c0392b;   
+  background-color: #c0392b;
 }
 
 .login-link{
-  background-color: #80e73c;   
-  color: white;                
-  padding: 10px 20px;          
-  border: none;                
-  border-radius: 5px;          
-  cursor: pointer;             
+  background-color: #80e73c;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
   font-size: 16px;
-  transition: background 0.3s; /* animación */
+  transition: background 0.3s;
+}
+
+.user-info {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.worker-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 9999px;
+  background-color: rgba(255, 255, 255, 0.12);
+  color: #ecf0f1;
+  font-size: 14px;
+  line-height: 1;
+}
+
+.worker-status__dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #f1c40f;
+  position: relative;
+}
+
+.worker-status--ok {
+  color: #2ecc71;
+  background-color: rgba(46, 204, 113, 0.12);
+}
+
+.worker-status--ok .worker-status__dot {
+  background-color: #2ecc71;
+  box-shadow: 0 0 6px rgba(46, 204, 113, 0.7);
+}
+
+.worker-status--error {
+  color: #e74c3c;
+  background-color: rgba(231, 76, 60, 0.12);
+}
+
+.worker-status--error .worker-status__dot {
+  background-color: #e74c3c;
+  box-shadow: 0 0 6px rgba(231, 76, 60, 0.6);
+}
+
+.worker-status--loading .worker-status__dot {
+  animation: worker-status-pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes worker-status-pulse {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(0.9);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
 }
