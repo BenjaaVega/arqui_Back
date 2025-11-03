@@ -2,6 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import { webpayService } from '../../services/webpayService';
+import { recommendationsService } from '../../services/recommendationsService';
 import { useApiAuth } from '../../lib/api';
 import './WebPayReturn.css';
 
@@ -15,6 +16,7 @@ const WebPayReturn = () => {
   const [transaction, setTransaction] = useState(null);
   const [error, setError] = useState('');
   const [countdown, setCountdown] = useState(3);
+  const [transactionType, setTransactionType] = useState(() => sessionStorage.getItem('webpay_transaction_type'));
 
   const token = searchParams.get('token_ws');
 
@@ -24,10 +26,11 @@ const WebPayReturn = () => {
       setStatus('processing');
 
       // Determine transaction type from sessionStorage
-      const transactionType = sessionStorage.getItem('webpay_transaction_type');
-      
+      const storedTransactionType = sessionStorage.getItem('webpay_transaction_type');
+      setTransactionType(storedTransactionType);
+
       let propertyUrl;
-      if (transactionType === 'wallet_deposit') {
+      if (storedTransactionType === 'wallet_deposit') {
         // For wallet deposits, retrieve the wallet URL from the transaction
         propertyUrl = sessionStorage.getItem('webpay_reservation_url') || 'wallet://deposit';
       } else {
@@ -43,31 +46,55 @@ const WebPayReturn = () => {
 
       // Commit the transaction with the URL
       const result = await webpayService.commitTransaction(token, propertyUrl);
-      
+
+      if (!result?.success) {
+        throw new Error(result?.error || 'La transacción fue rechazada');
+      }
+
+      const propertyContextRaw = sessionStorage.getItem('webpay_reservation_context');
+      let propertyContext = null;
+      if (propertyContextRaw) {
+        try {
+          propertyContext = JSON.parse(propertyContextRaw);
+        } catch (parseError) {
+          console.warn('No se pudo parsear el contexto de reserva para recomendaciones:', parseError);
+        }
+      }
+
+      if (storedTransactionType !== 'wallet_deposit') {
+        recommendationsService.generateFromPurchase(propertyContext ?? { url: propertyUrl }).then((response) => {
+          if (response?.job_id) {
+            console.log('Recommendation job triggered successfully:', response.job_id);
+          }
+        });
+      }
+
       if (!result) {
         throw new Error('No se pudo confirmar la transacción');
       }
 
       console.log('WebPay transaction committed successfully:', result);
-      setTransaction(result);
+      setTransaction(result.transaction || result);
       setStatus('success');
-      
+
       // Clean up sessionStorage
       sessionStorage.removeItem('webpay_reservation_url');
       sessionStorage.removeItem('webpay_reservation_price');
       sessionStorage.removeItem('webpay_transaction_type');
       sessionStorage.removeItem('webpay_transaction_description');
-      
+      sessionStorage.removeItem('webpay_reservation_context');
+
     } catch (err) {
       console.error('Error processing WebPay return:', err);
       setError(err.message || 'Error al procesar el pago');
       setStatus('error');
-      
+
       // Clean up sessionStorage on error
       sessionStorage.removeItem('webpay_reservation_url');
       sessionStorage.removeItem('webpay_reservation_price');
       sessionStorage.removeItem('webpay_transaction_type');
       sessionStorage.removeItem('webpay_transaction_description');
+      sessionStorage.removeItem('webpay_reservation_context');
     }
   }, [token]);
 
@@ -94,14 +121,13 @@ const WebPayReturn = () => {
       return () => clearTimeout(timer);
     } else if (status === 'success' && countdown === 0) {
       // Navigate to different pages based on transaction type
-      const transactionType = sessionStorage.getItem('webpay_transaction_type');
       if (transactionType === 'wallet_deposit') {
         navigate('/wallet');
       } else {
         navigate('/visit-history');
       }
     }
-  }, [status, countdown, navigate]);
+  }, [status, countdown, transactionType, navigate]);
 
   const handleRetry = () => {
     setError('');
@@ -120,7 +146,6 @@ const WebPayReturn = () => {
           <div className="webpay-return-spinner"></div>
         </div>
         {(() => {
-          const transactionType = sessionStorage.getItem('webpay_transaction_type');
           const isWalletDeposit = transactionType === 'wallet_deposit';
           return isWalletDeposit ? (
             <>
@@ -151,7 +176,6 @@ const WebPayReturn = () => {
           <div className="webpay-return-success-icon">✅</div>
         </div>
         {(() => {
-          const transactionType = sessionStorage.getItem('webpay_transaction_type');
           const isWalletDeposit = transactionType === 'wallet_deposit';
           return isWalletDeposit ? (
             <>
@@ -205,11 +229,10 @@ const WebPayReturn = () => {
         )}
 
         {(() => {
-          const transactionType = sessionStorage.getItem('webpay_transaction_type');
           const isWalletDeposit = transactionType === 'wallet_deposit';
           return (
             <div className="webpay-return-actions">
-              <button 
+              <button
                 onClick={() => navigate(isWalletDeposit ? '/wallet' : '/visit-history')}
                 className="webpay-return-button webpay-return-button-primary"
               >
