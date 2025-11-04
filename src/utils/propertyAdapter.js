@@ -2,6 +2,7 @@ export function adaptProperty(p) {
   if (!p) return null;
   return {
     // Campos que pides en las Cards/Modal
+    id: p.id,
     title: p.name || "",
     image: p.img || "",
     price: p.price ?? null,
