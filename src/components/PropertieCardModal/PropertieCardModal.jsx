@@ -60,7 +60,19 @@ const PropertieCardModal = ({
       sessionStorage.setItem('webpay_transaction_description', reservationDescription);
       sessionStorage.setItem('webpay_reservation_url', property.url);
       sessionStorage.setItem('webpay_reservation_price', property.price.toString());
-      sessionStorage.setItem('webpay_reservation_amount', reservationAmount.toString());
+      sessionStorage.setItem(
+        'webpay_reservation_context',
+        JSON.stringify({
+          id: property.id ?? null,
+          url: property.url,
+          price: property.price ?? null,
+          bedrooms: property.bedrooms ?? null,
+          bathrooms: property.bathrooms ?? null,
+          location: property.location ?? '',
+          title: property.title ?? ''
+        })
+      );
+      
       // Create WebPay transaction
       const response = await webpayService.createTransaction({
         amount: reservationAmount,
@@ -109,7 +121,7 @@ const PropertieCardModal = ({
       sessionStorage.removeItem('webpay_transaction_description');
       sessionStorage.removeItem('webpay_reservation_url');
       sessionStorage.removeItem('webpay_reservation_price');
-      sessionStorage.removeItem('webpay_reservation_amount');
+      sessionStorage.removeItem('webpay_reservation_context');
       setRequestingVisit(false);
     }
   };

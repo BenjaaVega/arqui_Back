@@ -2,6 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import { webpayService } from '../../services/webpayService';
+import { recommendationsService } from '../../services/recommendationsService';
 import { useApiAuth } from '../../lib/api';
 import './WebPayReturn.css';
 
@@ -50,6 +51,24 @@ const WebPayReturn = () => {
         throw new Error(result?.error || 'La transacción fue rechazada');
       }
 
+      const propertyContextRaw = sessionStorage.getItem('webpay_reservation_context');
+      let propertyContext = null;
+      if (propertyContextRaw) {
+        try {
+          propertyContext = JSON.parse(propertyContextRaw);
+        } catch (parseError) {
+          console.warn('No se pudo parsear el contexto de reserva para recomendaciones:', parseError);
+        }
+      }
+
+      if (storedTransactionType !== 'wallet_deposit') {
+        recommendationsService.generateFromPurchase(propertyContext ?? { url: propertyUrl }).then((response) => {
+          if (response?.job_id) {
+            console.log('Recommendation job triggered successfully:', response.job_id);
+          }
+        });
+      }
+
       if (!result) {
         throw new Error('No se pudo confirmar la transacción');
       }
@@ -64,6 +83,7 @@ const WebPayReturn = () => {
       sessionStorage.removeItem('webpay_reservation_amount');
       sessionStorage.removeItem('webpay_transaction_type');
       sessionStorage.removeItem('webpay_transaction_description');
+      sessionStorage.removeItem('webpay_reservation_context');
 
     } catch (err) {
       console.error('Error processing WebPay return:', err);
@@ -76,6 +96,7 @@ const WebPayReturn = () => {
       sessionStorage.removeItem('webpay_reservation_amount');
       sessionStorage.removeItem('webpay_transaction_type');
       sessionStorage.removeItem('webpay_transaction_description');
+      sessionStorage.removeItem('webpay_reservation_context');
     }
   }, [token]);
 
