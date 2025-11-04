@@ -80,6 +80,7 @@ const WebPayReturn = () => {
       // Clean up sessionStorage
       sessionStorage.removeItem('webpay_reservation_url');
       sessionStorage.removeItem('webpay_reservation_price');
+      sessionStorage.removeItem('webpay_reservation_amount');
       sessionStorage.removeItem('webpay_transaction_type');
       sessionStorage.removeItem('webpay_transaction_description');
       sessionStorage.removeItem('webpay_reservation_context');
@@ -92,6 +93,7 @@ const WebPayReturn = () => {
       // Clean up sessionStorage on error
       sessionStorage.removeItem('webpay_reservation_url');
       sessionStorage.removeItem('webpay_reservation_price');
+      sessionStorage.removeItem('webpay_reservation_amount');
       sessionStorage.removeItem('webpay_transaction_type');
       sessionStorage.removeItem('webpay_transaction_description');
       sessionStorage.removeItem('webpay_reservation_context');

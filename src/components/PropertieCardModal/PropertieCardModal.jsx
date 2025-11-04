@@ -51,7 +51,13 @@ const PropertieCardModal = ({
         throw new Error(`El monto de reserva (${reservationAmount.toLocaleString()} CLP) es menor al mínimo permitido (${MINIMUM_AMOUNT.toLocaleString()} CLP). El precio de la propiedad parece ser incorrecto.`);
       }
       
-      // Save property URL in sessionStorage before redirecting
+      // Save reservation context in sessionStorage before redirecting
+      const reservationDescription = property.title
+        ? `Reserva visita - ${property.title}`
+        : 'Reserva de visita';
+
+      sessionStorage.setItem('webpay_transaction_type', 'visit_reservation');
+      sessionStorage.setItem('webpay_transaction_description', reservationDescription);
       sessionStorage.setItem('webpay_reservation_url', property.url);
       sessionStorage.setItem('webpay_reservation_price', property.price.toString());
       sessionStorage.setItem(
@@ -111,6 +117,8 @@ const PropertieCardModal = ({
         setVisitMessage(error.message || "Error al iniciar el pago de reserva");
       }
       
+      sessionStorage.removeItem('webpay_transaction_type');
+      sessionStorage.removeItem('webpay_transaction_description');
       sessionStorage.removeItem('webpay_reservation_url');
       sessionStorage.removeItem('webpay_reservation_price');
       sessionStorage.removeItem('webpay_reservation_context');
